@@ -1,0 +1,41 @@
+from flask import Flask
+from flask import Flask, render_template
+import pandas
+import random
+
+app = Flask(__name__)
+path = "./wordFiles/"
+
+@app.route("/")
+def main():
+    adverbs = pandas.read_csv(path+'adverb.csv',header=0)
+    adjectives = pandas.read_csv(path+'adjective.csv',header=0)
+    animals = pandas.read_csv(path+'animal.csv',header=0)
+    specials = pandas.read_csv(path+'special.csv',header=0)
+
+    adverbCount = adverbs.count(0).values[0]
+    adjectiveCount = adjectives.count(0).values[0]
+    animalCount = animals.count(0).values[0]
+    specialCount = specials.count(0).values[0]
+
+    selectAdverb = random.randint(0,adverbCount-1)
+    selectAdjective = random.randint(0,adjectiveCount-1)
+    selectAnimal = random.randint(0,animalCount-1)
+    selectSpecial = random.randint(0,specialCount-1)
+
+    adverb = adverbs.iloc[selectAdverb].values[0]
+    adjective = adjectives.iloc[selectAdjective].values[0]
+    animal = animals.iloc[selectAnimal].values[0]
+    number = random.randint(0,9)
+    special = specials.iloc[selectSpecial].values[0]
+
+    password = adverb + adjective + animal + str(number) + special
+
+    return render_template(
+        'index.html', **locals())
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5000)
+
+
+#def get_word(type)
