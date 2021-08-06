@@ -15,7 +15,12 @@ RUN apk add g++
 RUN pip install -r requirements.txt
 
 # Copy the content of the local src directory to the working directory
-COPY app.py .
+#COPY app.py .
+#COPY adjectives.csv .
+#COPY adverbs.csv .
+#COPY animals.csv .
+#COPY special.csv .
+COPY . /PassGenApp
 
 # Specify the command to run on container start
 CMD [ "python", "./app.py" ]
